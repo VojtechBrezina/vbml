@@ -1,0 +1,24 @@
+[h]1[]The page title[]
+
+[h]2[]A subtitle[]
+
+This is some page content with [b]bold[] and [i]italic[] text. Unlike standard
+[icode][]html[], we have [d]dim text[], [icode][]inline code[] including
+highliting: [icode]js[]let aFunction = () => { console.log('Hello'); };[].
+
+Here we have the next paragraph, but if we just like a line break,[br]
+we can do that as well. [b]Things can of course be [i]freely combined[] if you
+want.[] But some combinations might be undesired.
+
+We can use [[square brackets]] by doubling them. If we leave some [ just
+floating, they should get ] ignored with a non-fatal error.
+
+[line]
+This is how you can break things up with a horisontal line.
+
+The double line break is just a syntactic sugar.[pend]The [icode][][[pend]][] command can
+be used instead.
+
+[foot]
+A footer automatically gets the proper html classification if necessary.
+[]

@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+
+import sys
+import src.lexer
+import src.parser
+import colorama
+from src.util import logging
+
+if __name__ == '__main__':
+    colorama.init()
+
+    tokens = src.lexer.tokenize(sys.stdin) 
+    for token in tokens:
+        logging.log('[tokenize]', logging.DEBUG, token)
+
+    tree = src.parser.parse(tokens)
+    tree.log(0)
