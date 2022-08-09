@@ -15,3 +15,9 @@ colors = {
 
 def log(tag, level, message, indent=0):
     print(f'{colors[level]}{tag}{colorama.Fore.RESET}: {" " * (4 * indent)}{message}', file=sys.stderr)
+
+def highlight(text, normal, highlight, start, end):
+    return f'{normal}{text[:start]}{highlight}{text[start:end]}{normal}{text[end:]}{colorama.Fore.RESET}'
+
+def highlight_error(text, start, end):
+    return highlight(text, colorama.Fore.YELLOW, colorama.Fore.RED, start, end)

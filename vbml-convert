@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 
 import sys
-import src.lexer
-import src.parser
 import colorama
-from src.util import logging
+from src import lexer, parser, logging, generator
 
 if __name__ == '__main__':
     colorama.init()
 
-    tokens = src.lexer.tokenize(sys.stdin) 
-    for token in tokens:
-        logging.log('[tokenize]', logging.DEBUG, token)
+    lines = [line.replace('\n', ' ') for line in sys.stdin]
 
-    tree = src.parser.parse(tokens)
-    tree.log(0)
+    tokens = lexer.tokenize(lines) 
+
+    tree = parser.parse(tokens, lines)
+
+    document = generator.generate(tree)
+
+    print(document.content)

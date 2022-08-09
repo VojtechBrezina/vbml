@@ -1,7 +1,7 @@
 import re
 import sys
 from collections import deque
-from src.util import logging
+from . import logging
 import colorama
 
 token_kinds = [
@@ -17,9 +17,12 @@ token_kinds = [
 ]
 
 class Token:
-    def __init__(self, kind, data):
+    def __init__(self, kind, data, line, start, end):
         self.kind = kind
         self.data = data
+        self.line = line
+        self.start = start
+        self.end = end
 
     def __repr__(self):
         result = f'{colorama.Fore.GREEN}{self.kind}{colorama.Fore.RESET}'
@@ -31,8 +34,7 @@ class Token:
 def tokenize(code):
     tokens = deque()
     for ln, line in enumerate(code):
-        line = line.replace('\n', '')
-        if line == '':
+        if line.strip() == '':
             line = '[pend]'
         ln += 1
         index = 0
@@ -40,7 +42,11 @@ def tokenize(code):
             for kind, pattern, get_data in token_kinds:
                 match = pattern.match(line[index:])
                 if match:
-                    token = Token(kind, get_data(match[0]))
+                    token = Token(
+                        kind, 
+                        get_data(match[0]), 
+                        ln - 1, index, index + match.end()
+                    )
                     if kind != 'text':
                         tokens.append(token)
                     else:
@@ -51,10 +57,12 @@ def tokenize(code):
                     index += match.end()
                     break
             else:
-                where = f'{colorama.Fore.YELLOW}{line[:index]}{colorama.Fore.RED}{line[index]}{colorama.Fore.YELLOW}{line[index+1:]}{colorama.Fore.RESET}'
-                logging.log('[tokenize]', logging.ERROR, 
-                    f'Unknown token at {ln}:{index + 1} : {where}')
+                where = logging.highlight(line, colorama.Fore.YELLOW, colorama.Fore.RED, index, index + 1)
+                logging.log('[tokenize]', logging.ERROR,
+                    f'Unknown token at {ln}:{index + 1}: {where}')
                 index += 1
 
+    for token in tokens:
+        logging.log('[tokenize]', logging.DEBUG, token)
     return tokens
 

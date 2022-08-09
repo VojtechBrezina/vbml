@@ -1,0 +1,39 @@
+[h]1[]The demo[]
+
+[h]2[]Basics[]
+
+[h]3[]Syntax[]
+
+The only reserved character are [ic][[]][] square brackets escaped by
+doubling them like so [ic][[[[[]. Everything revolves around "commands"
+inside these brackets. If the commands need some parameters, these are ended
+with a terminator - an empty pair of brackets: [ic][[]][].
+
+Here are some examples:
+
+[ic][[line]][] - This a [ic]line[] command with no parameters.[br]
+[ic][[b]]param1[[]][] - This is an [ic]b[] command with one parameter.[br]
+[ic][[h]]1[[]]text[[]][] - This is an [ic]h[] command with two parameters.[br]
+
+[h]3[]Text flow[]
+
+The text flow is similar to markdown in that single line breaks are
+insignificant and a double or more line break separates two paragraphs. In fact
+all text is separated into paragraphs, unless some commands change that
+behavior. More than two line breaks in a row technically create more
+paragraphs, but all empty paragraphs are automatically removed. You can learn
+more about influencing text flow in the description of commands such as
+[ic][[pend]][] or [ic][[br]][].
+
+[h]2[]Standard html stuff[]
+
+[h]3[]bold, italics and code[]
+
+The [ic][[b]][] and [ic][[i]][] commands are what anyone would expect from html
+itself. The [ic]<code>[] element has been renamed to [ic][[ic]][] for personal
+convenience as I use it a lot.
+
+Example: [ic][[b]]bold [[i]]bold italics[[]][[]] [[ic]]code [[b]]bold
+code[[]][[]][] - [b]bold [i]bold italics[][] [ic]code [b]bold code[][]
+
+
