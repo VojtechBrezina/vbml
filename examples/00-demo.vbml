@@ -12,7 +12,7 @@ with a terminator - an empty pair of brackets: [ic][[]][].
 Here are some examples:
 
 [ic][[line]][] - This a [ic]line[] command with no parameters.[br]
-[ic][[b]]param1[[]][] - This is an [ic]b[] command with one parameter.[br]
+[ic][[b]]param1[[]][] - This is a [ic]b[] command with one parameter.[br]
 [ic][[h]]1[[]]text[[]][] - This is an [ic]h[] command with two parameters.[br]
 
 [h]3[]Text flow[]
@@ -41,4 +41,4 @@ code[[]][[]][] - [b]bold [i]bold italics[][] [ic]code [b]bold code[][]
 If you want a simple line break, you can use [ic][[br]][] as you would in html.
 If you want to force a paragraph end in the middle of a line for some reason,
 you can use [ic][[pend]][] (In the background, all blank lines get replaced
-with this exact command, you can see that in the converter output.
+with this exact command, you can see that in the converter output.)

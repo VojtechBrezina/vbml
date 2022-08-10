@@ -33,7 +33,8 @@ class Document():
 
     def paragraph_end(self):
         self.inside_paragraf = False
-        if self.paragraph.strip() != '':
+        self.paragraph = self.paragraph.strip()
+        if self.paragraph != '':
             self.content += f'<p>{self.paragraph}</p>'
         self.paragraph = ''
 
