@@ -1,7 +1,18 @@
-# just binding my \rm as usual
-run: demo.html
-	flatpak run org.mozilla.firefox demo.html
+compile:
+	$(MAKE) -C build/release vbml
 
-demo.html: examples/00-demo.vbml
-	./vbml < examples/00-demo.vbml > demo.html
+run: 
+	$(MAKE) -C build/release run
+
+compile-debug:
+	$(MAKE) -C build/debug vbml
+
+run-debug: 
+	$(MAKE) -C build/debug run
+
+.PHONY: compile compile-debug run run-debug
+
+clean:
+	$(MAKE) -C build/release clean 
+	$(MAKE) -C build/debug clean 
 
