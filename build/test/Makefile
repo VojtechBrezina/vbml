@@ -1,19 +1,25 @@
-PROGRAM := vbml
+# Just fill in the name of your program and your options (ordered from most
+# commonly used).
+# preferably placed in build/<insert config name>/ (see SRC_DIR)
+
+PROGRAM := vbml-test
 
 SRC_DIR := ../../src/
 
-CXX := g++
-CXFLAGS := -std=c++17 -Wall -pedantic -Werror -g -Og -DNDEBUG -iquote $(SRC_DIR)
+CXFLAGS := -std=c++17 -Wall -pedantic -Werror -g -Og -DTEST -iquote $(SRC_DIR)
 LDFLAGS := 
+CXX := g++
 
 BUILD_DIR := obj/
+
+# ------------------ Usually no need to touch anything below -------------------
 
 SOURCES := $(shell find $(SRC_DIR) -name '*.cpp')
 DEPS := $(patsubst %.cpp,%.d,$(patsubst $(SRC_DIR)%,$(BUILD_DIR)%, $(SOURCES)))
 OBJS := $(patsubst %.cpp,%.o,$(patsubst $(SRC_DIR)%,$(BUILD_DIR)%, $(SOURCES)))
 BUILD_SUBDIRS := $(patsubst $(SRC_DIR)%,$(BUILD_DIR)%, $(shell find $(SRC_DIR) -type d))
 
-all: $(PROGRAM) 
+compile: $(PROGRAM) 
 
 run: $(PROGRAM)
 	./$(PROGRAM)
@@ -35,7 +41,7 @@ demo.html: examples/00-demo.vbml
 
 include $(DEPS)
 
-.PHONY: all run clean
+.PHONY: compile run clean
 
 clean:
 	-rm -rf $(BUILD_DIR) vbml

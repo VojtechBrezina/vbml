@@ -1,10 +1,11 @@
 PROGRAM := vbml
 
+SRC_DIR := ../../src/
+
 CXX := g++
-CXFLAGS := -std=c++17 -g -Og -iquote=src
+CXFLAGS := -std=c++17 -Wall -Werror -pedantic -g -Og -iquote $(SRC_DIR)
 LDFLAGS :=
 
-SRC_DIR := ../../src/
 BUILD_DIR := obj/
 
 SOURCES := $(shell find $(SRC_DIR) -name '*.cpp')
