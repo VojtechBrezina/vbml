@@ -3,7 +3,8 @@
 #include <sstream>
 
 TestResult loggingTests(Logger &logger){
-    const std::string tag = "[tests][logging]";
+    const static std::string tag = "[tests][logging]";
+
     Tester tester(tag, logger);
 
     // A simple warning in a colorless stream.
@@ -27,7 +28,7 @@ TestResult loggingTests(Logger &logger){
             "There is a highlighted segment in here.", TextColor::RED, 11, 30
         );
         l.endMessage();
-        if(!tester.assert("Logger can highlight a segmen without color",
+        if(!tester.assert("Logger can highlight a segment without color",
             oss.str() == 
                 "E[test]: There is a highlighted segment in here.\n"
                 "E[test]:            ^^^^^^^^^^^^^^^^^^^\n"

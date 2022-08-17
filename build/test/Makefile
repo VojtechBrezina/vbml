@@ -6,7 +6,7 @@ PROGRAM := vbml-test
 
 SRC_DIR := ../../src/
 
-CXFLAGS := -std=c++17 -Wall -pedantic -Werror -g -Og -DTEST -iquote $(SRC_DIR)
+CXFLAGS := -std=c++20 -Wall -pedantic -Werror -g -Og -DTEST -iquote $(SRC_DIR)
 LDFLAGS := 
 CXX := g++
 

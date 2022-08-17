@@ -33,10 +33,14 @@ class Tester {
 
         bool assert(const std::string &message, bool cond);
 
-        TestResult getResult(){ return result; }
+        TestResult getResult() const { return result; }
 };
 
 /// Run all the tests for the program.
 bool runTests();
 
 TestResult loggingTests(Logger &logger);
+
+TestResult lexerTests(Logger &logger);
+
+TestResult loaderTests(Logger &logger);

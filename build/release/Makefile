@@ -3,7 +3,7 @@ PROGRAM := vbml
 SRC_DIR := ../../src/
 
 CXX := g++
-CXFLAGS := -std=c++17 -Wall -pedantic -Werror -g -Og -DNDEBUG -iquote $(SRC_DIR)
+CXFLAGS := -std=c++20 -Wall -pedantic -Werror -g -Og -DNDEBUG -iquote $(SRC_DIR)
 LDFLAGS := 
 
 BUILD_DIR := obj/

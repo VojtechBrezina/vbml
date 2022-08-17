@@ -23,7 +23,7 @@ bool Tester::assert(const std::string &message, bool cond){
 
 bool runTests(){
     const std::string tag = "[tests]";
-    Logger logger(LogLevel::DEBUG, std::cerr);
+    Logger logger(LogLevel::DEBUG, std::clog);
     TestResult result;
 
     logger.quickMessage(tag, LogLevel::INFO, "");
@@ -31,6 +31,8 @@ bool runTests(){
     logger.quickMessage(tag, LogLevel::INFO, "");
 
     result += loggingTests(logger);
+    result += lexerTests(logger);
+    result += loaderTests(logger);
 
     // Log the final results.
 

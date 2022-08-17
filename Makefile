@@ -1,3 +1,14 @@
+vbml: compile
+	-rm vbml
+	cp build/release/vbml .
+	strip --strip-unneeded vbml
+
+install: vbml
+	cp vbml ~/.local/bin/
+
+uninstall:
+	-rm ~/.local/bin/vbml
+
 compile:
 	$(MAKE) -C build/release vbml
 
