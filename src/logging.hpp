@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <exception>
+#include <stdexcept>
 
 
 /// The colors used in logging with some aliases for more clarity.
