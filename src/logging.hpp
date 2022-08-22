@@ -5,6 +5,8 @@
 #include <vector>
 #include <stdexcept>
 
+#include "loader.hpp"
+
 
 /// The colors used in logging with some aliases for more clarity.
 enum class TextColor {
@@ -13,6 +15,7 @@ enum class TextColor {
     RED = 31,
     GREEN = 32,
     YELLOW = 33,
+    MAGENTA = 35,
     CYAN = 36,
 
     EROR = RED,
@@ -21,8 +24,11 @@ enum class TextColor {
     DEBUG = GREEN,
 
     STRING = YELLOW,
-    PARAM = YELLOW,
+    PUNCT = MAGENTA,
     NAME = GREEN,
+
+    GOOD = GREEN,
+    BAD = RED,
 };
 
 /// The level at which any messages are logged to allow filtering as is usual.
@@ -83,6 +89,7 @@ class Logger {
     /// Useful for the colorless highlights.
     void writeMessageHeader();
 
+    size_t messageLength = 0;
     size_t highlightStart = std::string::npos;
     size_t highlightEnd = std::string::npos;
 
@@ -130,6 +137,23 @@ class Logger {
         /// Write a piece of text to the stream. (Using \n in here should be
         /// avoided.
         void write(const std::string &text);
+
+        /// Write in a color, then set it to what it was before.
+        void write(TextColor color, const std::string &text){
+            TextColor originalColor = messageColor;
+            setColor(color);
+            write(text);
+            setColor(originalColor);
+        }
+
+        void put(char c);
+
+        void put(TextColor color, char c){
+            TextColor originalColor = messageColor;
+            setColor(color);
+            put(c);
+            setColor(originalColor);
+        }
 
         /// Like write, but the selected area gets highlighted. Use this when
         /// you need to highlight the segment even in non color mode.

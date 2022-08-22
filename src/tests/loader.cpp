@@ -10,7 +10,7 @@ TestResult loaderTests(Logger &logger){
 
     {
         std::istringstream input(
-            "S short test file.\n"
+            "A short test file.\n"
             "Line two.\n"
             "Last line.\n"
         );

@@ -92,6 +92,8 @@ void Logger::startMessage(const std::string &tag, LogLevel level){
     messageTag = tag;
     messageLogLevel = level;
     messageColor = TextColor::NONE;
+    highlightStart = highlightEnd = std::string::npos;
+    messageLength = 0;
     writeMessageHeader();
 }
 
@@ -106,7 +108,7 @@ void Logger::endMessage(){
         setColor(TextColor::NONE);
 
     insideMessage = false;
-    *stream << '\n';
+    stream->put('\n');
 
     if(useColor){
         putColor(TextColor::NONE);
@@ -132,9 +134,11 @@ void Logger::setColor(TextColor color){
             throw std::logic_error("Cannot set the color outside of a message");
 #   endif
 
-    messageColor = color;
-    if(useColor)
-        putColor(color);
+    if(messageColor != color){
+        messageColor = color;
+        if(useColor)
+            putColor(color);
+    }
 }
 
 
@@ -145,6 +149,17 @@ void Logger::write(const std::string &text){
 #   endif
 
     *stream << text;
+    messageLength += text.length();
+}
+
+void Logger::put(char c){
+#   ifndef NDEBUG
+        if(!insideMessage)
+            throw std::logic_error("Cannot write outside of a message");
+#   endif
+
+    stream->put(c);
+    messageLength++;
 }
 
 
@@ -158,8 +173,8 @@ void Logger::writeHighlight(
             );
 #   endif
 
-    highlightStart = start;
-    highlightEnd = end;
+    highlightStart = messageLength + start;
+    highlightEnd = messageLength + end;
 
     if(useColor){
         for(size_t pos = 0; pos < start; ++pos)
@@ -173,4 +188,7 @@ void Logger::writeHighlight(
     } else {
         *stream << text;
     }
+
+    messageLength += text.length();
 }
+

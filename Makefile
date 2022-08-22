@@ -29,6 +29,7 @@ test:
 clean:
 	$(MAKE) -C build/release clean 
 	$(MAKE) -C build/debug clean 
+	$(MAKE) -C build/test clean 
 
 lines:
 	wc -l `find src -type f`

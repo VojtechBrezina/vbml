@@ -8,17 +8,32 @@ bool Tester::assert(const std::string &message, bool cond){
     logger->write(": ");
 
     if(cond){
-        logger->setColor(TextColor::GREEN);
-        logger->write("OK");
+        logger->write(TextColor::GOOD, "OK");
         result.ok++;
     } else {
-        logger->setColor(TextColor::RED);
-        logger->write("Fail");
+        logger->write(TextColor::BAD, "Fail");
     }
 
     logger->endMessage();
 
     return cond;
+}
+
+bool Tester::assertEqual(
+    const std::string &message,
+    const std::string &left, const std::string &right
+){
+    bool result = assert(message, left == right);
+
+    if(!result){
+        logger->startMessage(tag, LogLevel::ERROR);
+        logger->write(TextColor::STRING, left);
+        logger->write(" != ");
+        logger->write(TextColor::STRING, right);
+        logger->endMessage();
+    }
+
+    return result;
 }
 
 bool runTests(){
@@ -31,19 +46,18 @@ bool runTests(){
     logger.quickMessage(tag, LogLevel::INFO, "");
 
     result += loggingTests(logger);
-    result += lexerTests(logger);
     result += loaderTests(logger);
+    result += lexerTests(logger);
 
     // Log the final results.
 
     logger.startMessage(tag, LogLevel::INFO);
     logger.write("Final result: ");
-    logger.setColor(
-        result.ok == result.total ? TextColor::GREEN : TextColor::RED
+    logger.write(
+        result.ok == result.total ? TextColor::GOOD : TextColor::BAD,
+        std::to_string(result.ok)
     );
-    logger.write(std::to_string(result.ok));
-    logger.setColor(TextColor::NONE);
-    logger.write("/");
+    logger.write(TextColor::NONE, "/");
     logger.write(std::to_string(result.total));
     logger.endMessage();
 

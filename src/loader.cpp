@@ -92,8 +92,14 @@ void SourcePos::moveBack(size_t chars, const SourceFile &code){
     }
 }
 
+std::string SourcePos::toString() const {
+    return std::to_string(line + 1) + ":" + std::to_string(column + 1);
+}
 
-SourceFile::SourceFile(std::istream &input){
+
+SourceFile::SourceFile(
+    std::istream &input, const std::string &name
+): name(name){
     for(std::string line; std::getline(input, line); ){
         // Needed for the parser plugins to do e.g. paragraphs.
         line.push_back('\n');

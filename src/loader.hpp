@@ -9,6 +9,7 @@
 /// lines (by size_t) and characters (by SourcePos).
 class SourceFile {
     std::vector<std::string> lines;
+    std::string name;
 
     public:
         /// The line:column pair with comparisons and the ability to calculate
@@ -42,10 +43,16 @@ class SourceFile {
             /// Just for moved as it is probably useless, but there is no reason
             /// to make it private, especcially on a struct.
             void moveBack(size_t chars, const SourceFile &code);
+
+            /// Get a string representation like 48:12 for logging purposes. (it
+            /// is one based to make it useful for debugging vbml files in
+            /// actual use as it is for some reason the standard to index from 1
+            /// in text editors.
+            std::string toString() const;
         };
 
         /// Read all of the given stream and make an instance.
-        SourceFile(std::istream &input);
+        SourceFile(std::istream &input, const std::string &name = "???");
 
         SourceFile() = delete;
 
@@ -63,6 +70,14 @@ class SourceFile {
         }
 
         size_t lineCount() const { return lines.size(); }
+
+        /// This position actually doesn't exist similarly to how STL iterators
+        /// behave so the for loop looks nice.
+        Pos endPos() const {
+            return { lines.size() - 1, lines.back().length() };
+        }
+
+        const std::string &getName() const { return name; }
 };
 
 using SourcePos = SourceFile::Pos;

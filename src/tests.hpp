@@ -33,14 +33,18 @@ class Tester {
 
         bool assert(const std::string &message, bool cond);
 
+        bool assertEqual(
+            const std::string & message, 
+            const std::string &left, const std::string &right
+        );
+
         TestResult getResult() const { return result; }
 };
 
 /// Run all the tests for the program.
 bool runTests();
 
+/// These are defined in src/tests/*.cpp
 TestResult loggingTests(Logger &logger);
-
 TestResult lexerTests(Logger &logger);
-
 TestResult loaderTests(Logger &logger);

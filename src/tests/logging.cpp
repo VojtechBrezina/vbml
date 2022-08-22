@@ -24,17 +24,17 @@ TestResult loggingTests(Logger &logger){
         std::ostringstream oss;
         Logger l(LogLevel::DEBUG, oss);
         l.startMessage("[test]", LogLevel::ERROR);
+        l.write("Something. ");
         l.writeHighlight(
             "There is a highlighted segment in here.", TextColor::RED, 11, 30
         );
         l.endMessage();
-        if(!tester.assert("Logger can highlight a segment without color",
-            oss.str() == 
-                "E[test]: There is a highlighted segment in here.\n"
-                "E[test]:            ^^^^^^^^^^^^^^^^^^^\n"
-        )){
-            logger.quickMessage(tag, LogLevel::DEBUG, "\n" + oss.str());
-        }
+        tester.assertEqual(
+            "Logger can highlight a segment without color",
+            oss.str(),
+            "E[test]: Something. There.is-a Highlighted segment in here.\n"
+            "E[test]:                       ^^^^^^^^^^^^^^^^^^^\n"
+        );
     }
 
     return tester.getResult();

@@ -12,17 +12,27 @@ enum class TokenKind {
     TEXT,
 };
 
+/// A token needs to know its kind, any optional value and the characters form
+/// the source it spans across.
 struct Token {
     TokenKind kind;
-    size_t line;
-    size_t column;
+    SourcePos start;
     size_t length;
     std::string value;
 
     Token(
-        TokenKind kind, size_t line, size_t column,
+        TokenKind kind, SourcePos start,
         size_t length = 0, const std::string &value = ""
-    ): kind(kind), line(line), column(column){}
+    ): kind(kind), start(start), length(length), value(value){}
+
+    /// Just a convenience - there is no end property and this is a struct
+    /// anyway.
+    void setEnd(const SourcePos &end, const SourceFile &code){
+        length = start.distanceTo(end, code);
+    }
 };
 
 std::deque<Token> tokenize(const SourceFile &code, Logger logger);
+
+void logTokens(Logger &logger, const std::deque<Token> &tokens);
+
