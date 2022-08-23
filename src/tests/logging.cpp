@@ -32,7 +32,7 @@ TestResult loggingTests(Logger &logger){
         tester.assertEqual(
             "Logger can highlight a segment without color",
             oss.str(),
-            "E[test]: Something. There.is-a Highlighted segment in here.\n"
+            "E[test]: Something. There is a highlighted segment in here.\n"
             "E[test]:                       ^^^^^^^^^^^^^^^^^^^\n"
         );
     }

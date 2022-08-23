@@ -1,5 +1,7 @@
 #include "tests.hpp"
 
+#include <algorithm>
+
 bool Tester::assert(const std::string &message, bool cond){
     result.total++;
 
@@ -26,10 +28,18 @@ bool Tester::assertEqual(
     bool result = assert(message, left == right);
 
     if(!result){
+        logger->quickMessage(tag, LogLevel::ERROR, "left != right:");
+
         logger->startMessage(tag, LogLevel::ERROR);
-        logger->write(TextColor::STRING, left);
-        logger->write(" != ");
-        logger->write(TextColor::STRING, right);
+        logger->write("left:  ");
+        logger->setColor(TextColor::STRING);
+        logger->writeString(left);
+        logger->endMessage();
+
+        logger->startMessage(tag, LogLevel::ERROR);
+        logger->write("right: ");
+        logger->setColor(TextColor::STRING);
+        logger->writeString(right);
         logger->endMessage();
     }
 

@@ -169,4 +169,15 @@ class Logger {
             write(text);
             endMessage();
         }
+
+        void writeString(
+            const std::string &text, TextColor specialColor = TextColor::PUNCT
+        ){
+            for(char c : text){
+                switch(c){
+                    default: put(c); break;
+                    case '\n': write(specialColor, "\\n"); break;
+                }
+            }
+        }
 };

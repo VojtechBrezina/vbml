@@ -1,7 +1,5 @@
 #include "lexer.hpp"
 
-#include <map>
-
 void writeUnexpectedTokenError(
     Logger &logger, const std::string &tag,
     const std::string &expected,
@@ -174,18 +172,13 @@ std::deque<Token> tokenize(const SourceFile &code, Logger logger){
 }
 
 void logTokens(Logger &logger, const std::deque<Token> &tokens){
-    static const std::map<TokenKind, const std::string> tokenNames = {
-        {TokenKind::COMMAND, "Command"},
-        {TokenKind::TERMINATOR, "Terminator"},
-        {TokenKind::TEXT, "Text"}
-    };
     static const std::string tag = "[lexer]";
 
     logger.quickMessage(tag, LogLevel::DEBUG, "Logging tokens...");
 
     for(const Token &token : tokens){
         logger.startMessage("[lexer]", LogLevel::DEBUG);
-        logger.write(TextColor::NAME, tokenNames.at(token.kind));
+        logger.write(TextColor::NAME, tokenKindNames.at(token.kind));
         logger.put('(');
         logger.write(token.start.toString());
         logger.write(" - ");
@@ -195,16 +188,7 @@ void logTokens(Logger &logger, const std::deque<Token> &tokens){
             logger.write(": ");
             logger.setColor(TextColor::STRING);
             logger.put('"');
-            for(char c : token.value){
-                switch(c){
-                    case '\n':
-                        logger.write(TextColor::PUNCT, "\\n");
-                        break;
-                    default:
-                        logger.put(c);
-                        break;
-                }
-            }
+            logger.writeString(token.value);
             logger.put('"');
             logger.setColor(TextColor::NONE);
         }

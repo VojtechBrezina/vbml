@@ -2,6 +2,7 @@
 
 #include <string>
 #include <deque>
+#include <map>
 
 #include "logging.hpp"
 #include "loader.hpp"
@@ -10,6 +11,12 @@ enum class TokenKind {
     COMMAND,
     TERMINATOR,
     TEXT,
+};
+
+const std::map<TokenKind, const std::string> tokenKindNames = {
+    {TokenKind::COMMAND, "Command"},
+    {TokenKind::TERMINATOR, "Terminator"},
+    {TokenKind::TEXT, "Text"}
 };
 
 /// A token needs to know its kind, any optional value and the characters form
