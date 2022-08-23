@@ -39,7 +39,7 @@ struct Token {
     }
 };
 
-std::deque<Token> tokenize(const SourceFile &code, Logger logger);
+std::deque<Token> tokenize(const SourceFile &code, Logger &logger);
 
 void logTokens(Logger &logger, const std::deque<Token> &tokens);
 

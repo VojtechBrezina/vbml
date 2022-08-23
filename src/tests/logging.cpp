@@ -12,11 +12,11 @@ TestResult loggingTests(Logger &logger){
         std::ostringstream oss;
         Logger l(LogLevel::DEBUG, oss);
         l.quickMessage("[test]", LogLevel::WARNING, "This is a test message.");
-        if(!tester.assert("Logger writes a simple message without color",
-            oss.str() == "W[test]: This is a test message.\n"
-        )){
-            logger.quickMessage(tag, LogLevel::DEBUG, oss.str());
-        }
+        tester.assertEqual(
+            "Logger writes a simple message without color",
+            oss.str(),
+            "W[test]: This is a test message.\n"
+        );
     }
 
     // A highlight without colors.
@@ -34,6 +34,18 @@ TestResult loggingTests(Logger &logger){
             oss.str(),
             "E[test]: Something. There is a highlighted segment in here.\n"
             "E[test]:                       ^^^^^^^^^^^^^^^^^^^\n"
+        );
+    }
+
+    // Maximum log level.
+    {
+        std::ostringstream oss;
+        Logger l(LogLevel::ERROR, oss);
+        l.quickMessage("[test]", LogLevel::WARNING, "This is a test message.");
+        tester.assertEqual(
+            "Logger writes a simple message without color",
+            oss.str(),
+            ""
         );
     }
 

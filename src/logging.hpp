@@ -109,6 +109,14 @@ class Logger {
             detectTerminal();
         }
 
+        // We really do not want the stream to get copied around, if you are
+        // managing the stream yourself, just make a new instance.
+
+        Logger(const Logger &) = delete;
+        Logger(Logger &&) = delete;
+        Logger &operator =(const Logger &) = delete;
+        Logger &operator =(Logger &&) = delete;
+
         /// Delete the stream if you own it.
         ~Logger(){
             if(ownsStream)
@@ -121,6 +129,9 @@ class Logger {
         /// Change the maximum acceptable log level.
         void changeLogLevel(LogLevel v);
 
+        /// Useful for optimizing out complex message composition.
+        LogLevel getLogLevel() const { return maxLevel; }
+
         /// Start a single message.
         ///
         /// @param tag - The color coded tag to display at the begining.
@@ -131,11 +142,13 @@ class Logger {
         /// End the current message.
         void endMessage();
 
-        /// Set the text cololr for the next write call.
+        /// Set the text cololr for the next write call(s).
         void setColor(TextColor color);
 
         /// Write a piece of text to the stream. (Using \n in here should be
-        /// avoided.
+        /// avoided if you need to show a string with special characters in the
+        /// log, use writeString, if you want literal line breaks, write
+        /// multiple messages.
         void write(const std::string &text);
 
         /// Write in a color, then set it to what it was before.

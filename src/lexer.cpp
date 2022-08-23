@@ -22,7 +22,7 @@ void writeUnexpectedTokenError(
     logger.endMessage();
 }
 
-std::deque<Token> tokenize(const SourceFile &code, Logger logger){
+std::deque<Token> tokenize(const SourceFile &code, Logger &logger){
     const std::string tag = "[lexer]";
     std::deque<Token> tokens;
 

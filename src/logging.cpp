@@ -107,23 +107,23 @@ void Logger::endMessage(){
     if(useColor)
         setColor(TextColor::NONE);
 
-    insideMessage = false;
-    stream->put('\n');
+    put('\n');
 
     if(useColor){
         putColor(TextColor::NONE);
     } else if(highlightStart != std::string::npos){
         writeMessageHeader();
         for(size_t pos = 0; pos < highlightStart; ++pos)
-            stream->put(' ');
+            put(' ');
         for(size_t pos = highlightStart; pos < highlightEnd; ++pos)
-            stream->put('^');
-        stream->put('\n');
+            put('^');
+        put('\n');
 
         highlightStart = std::string::npos;
         highlightEnd = std::string::npos;
     }
 
+    insideMessage = false;
     stream->flush();
 }
 
@@ -133,6 +133,9 @@ void Logger::setColor(TextColor color){
         if(!insideMessage)
             throw std::logic_error("Cannot set the color outside of a message");
 #   endif
+
+    if(messageLogLevel > maxLevel)
+        return;
 
     if(messageColor != color){
         messageColor = color;
@@ -148,6 +151,9 @@ void Logger::write(const std::string &text){
             throw std::logic_error("Cannot write outside of a message");
 #   endif
 
+    if(messageLogLevel > maxLevel)
+        return;
+
     *stream << text;
     messageLength += text.length();
 }
@@ -157,6 +163,9 @@ void Logger::put(char c){
         if(!insideMessage)
             throw std::logic_error("Cannot write outside of a message");
 #   endif
+
+    if(messageLogLevel > maxLevel)
+        return;
 
     stream->put(c);
     messageLength++;
@@ -178,13 +187,13 @@ void Logger::writeHighlight(
 
     if(useColor){
         for(size_t pos = 0; pos < start; ++pos)
-            stream->put(text[pos]);
+            put(text[pos]);
         putColor(color);
         for(size_t pos = start; pos < end; ++pos)
-            stream->put(text[pos]);
+            put(text[pos]);
         putColor(messageColor);
         for(size_t pos = end; pos < text.length(); ++pos)
-            stream->put(text[pos]);
+            put(text[pos]);
     } else {
         *stream << text;
     }
