@@ -149,7 +149,7 @@ class Logger {
         /// avoided if you need to show a string with special characters in the
         /// log, use writeString, if you want literal line breaks, write
         /// multiple messages.
-        void write(const std::string &text);
+        void write(const std::string_view &text);
 
         /// Write in a color, then set it to what it was before.
         void write(TextColor color, const std::string &text){
@@ -193,4 +193,9 @@ class Logger {
                 }
             }
         }
+
+        /// Check Config::updateFromArgs in cli.cpp for an explanation.
+        std::string getMessageHeader(
+            LogLevel level, const std::string &tag
+        ) const;
 };

@@ -91,8 +91,7 @@ std::deque<Token> tokenize(const SourceFile &code, Logger &logger){
                     default:
                         tokens.back().value.push_back(code[pos]);
                         writeUnexpectedTokenError(
-                            logger, tag,
-                            "[", code, pos, 1
+                            logger, tag, "[", code, pos, 1
                         );
                         state = State::TEXT;
                         break;

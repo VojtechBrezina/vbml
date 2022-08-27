@@ -145,7 +145,7 @@ void Logger::setColor(TextColor color){
 }
 
 
-void Logger::write(const std::string &text){
+void Logger::write(const std::string_view &text){
 #   ifndef NDEBUG
         if(!insideMessage)
             throw std::logic_error("Cannot write outside of a message");
@@ -199,5 +199,28 @@ void Logger::writeHighlight(
     }
 
     messageLength += text.length();
+}
+
+
+std::string Logger::getMessageHeader(
+    LogLevel level, const std::string &tag
+) const {
+    std::string result;
+
+    if(useColor){
+        result += "\033[";
+        result += std::to_string((int)levelColors.at(level));
+        result += "m";
+    } else {
+        result += levelSigns.at(level);
+    }
+
+    result += tag;
+
+    if(useColor){
+        result += "\033[0m";
+    }
+
+    return result;
 }
 

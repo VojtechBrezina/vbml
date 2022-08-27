@@ -2,9 +2,10 @@
 
 #ifndef TEST
 
-int main(int argc, char ** argv){
+#include "cli.hpp"
 
-    return 0;
+int main(int argc, char ** argv){
+    return runCli(argc, argv);
 }
 
 #else // TEST
@@ -15,4 +16,4 @@ int main(void){
     return runTests() ? 0 : 1;
 }
 
-#endif
+#endif // TEST
