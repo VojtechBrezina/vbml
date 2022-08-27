@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-bool Tester::assert(const std::string &message, bool cond){
+bool Tester::assertTrue(const std::string &message, bool cond){
     result.total++;
 
     logger->startMessage(tag, LogLevel::INFO);
@@ -25,7 +25,7 @@ bool Tester::assertEqual(
     const std::string &message,
     const std::string &left, const std::string &right
 ){
-    bool result = assert(message, left == right);
+    bool result = assertTrue(message, left == right);
 
     if(!result){
         logger->quickMessage(tag, LogLevel::ERROR, "left != right:");

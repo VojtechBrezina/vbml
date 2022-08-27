@@ -31,7 +31,7 @@ class Tester {
             const std::string &tag, Logger &logger
         ): tag(tag), logger(&logger){}
 
-        bool assert(const std::string &message, bool cond);
+        bool assertTrue(const std::string &message, bool cond);
 
         bool assertEqual(
             const std::string & message, 
